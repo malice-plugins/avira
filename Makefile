@@ -32,13 +32,11 @@ gotest:
 
 avtest:
 	@echo "===> ${NAME} EICAR Test"
-	@docker run --init --rm --entrypoint=sh $(ORG)/$(NAME):$(VERSION) -c "/etc/init.d/zavd start --no-daemon > /dev/null 2>&1 && zavcli /malware/EICAR" > tests/av.virus || true
+	@docker run --init --rm --entrypoint=sh $(ORG)/$(NAME):$(VERSION) -c "/opt/avira/scancl /malware/EICAR" > tests/av.virus || true
 	@echo "===> ${NAME} Clean Test"
-	@docker run --init --rm --entrypoint=sh $(ORG)/$(NAME):$(VERSION) -c "/etc/init.d/zavd start --no-daemon > /dev/null 2>&1 && zavcli /bin/cat" > tests/av.clean || true
+	@docker run --init --rm --entrypoint=sh $(ORG)/$(NAME):$(VERSION) -c "/opt/avira/scancl /bin/cat" > tests/av.clean || true
 	@echo "===> ${NAME} Version"
-	@docker run --init --rm --entrypoint=sh $(ORG)/$(NAME):$(VERSION) -c "/etc/init.d/zavd start --no-daemon > /dev/null 2>&1 && zavcli --version" > tests/av.version || true
-	@echo "===> ${NAME} DB version"
-	@docker run --init --rm --entrypoint=sh $(ORG)/$(NAME):$(VERSION) -c "/etc/init.d/zavd start --no-daemon > /dev/null 2>&1 && zavcli --version-zavd" > tests/av.update || true
+	@docker run --init --rm --entrypoint=sh $(ORG)/$(NAME):$(VERSION) -c "/opt/avira/scancl --version" > tests/av.version || true
 
 test:
 	docker rm -f elasticsearch || true

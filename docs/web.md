@@ -23,9 +23,9 @@ Date: Sat, 21 Jan 2017 05:39:29 GMT
 {
   "avira": {
     "infected": true,
-    "result": "EICAR.Test.File-NoVirus",
-    "engine": "1979756",
-    "updated": "20170707"
+    "result": "Eicar-Test-Signature",
+    "engine": "8.3.44.100",
+    "updated": "20170709"
   }
 }
 ```

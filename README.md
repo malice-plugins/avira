@@ -67,9 +67,9 @@ This will output to stdout and POST to malice results API webhook endpoint.
 {
   "avira": {
     "infected": true,
-    "result": "EICAR.Test.File-NoVirus",
-    "engine": "1979756",
-    "updated": "20170707"
+    "result": "Eicar-Test-Signature",
+    "engine": "8.3.44.100",
+    "updated": "20170709"
   }
 }
 ```
@@ -79,9 +79,9 @@ This will output to stdout and POST to malice results API webhook endpoint.
 ---
 
 #### Avira
-| Infected      | Result      | Engine      | Updated      |
-|:-------------:|:-----------:|:-----------:|:------------:|
-| true | EICAR.Test.File-NoVirus | 1979756 | 20170707 |
+| Infected |        Result        |   Engine   | Updated  |
+|:--------:|:--------------------:|:----------:|:--------:|
+|   true   | Eicar-Test-Signature | 8.3.44.100 | 20170709 |
 
 ---
 

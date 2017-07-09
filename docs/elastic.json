@@ -1,0 +1,35 @@
+{
+  "took": 81,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "malice",
+        "_type": "samples",
+        "_id": "AV0fMu8GRY8StLSLKgsw",
+        "_score": 1,
+        "_source": {
+          "plugins": {
+            "av": {
+              "zoner": {
+                "engine": "1979756",
+                "infected": true,
+                "markdown": "#### Zoner\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| true | EICAR.Test.File-NoVirus | 1979756 | 20170707 |\n",
+                "result": "EICAR.Test.File-NoVirus",
+                "updated": "20170707"
+              }
+            }
+          },
+          "scan_date": "2017-07-07T22:36:57.969391678Z"
+        }
+      }
+    ]
+  }
+}

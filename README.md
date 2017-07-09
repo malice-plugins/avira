@@ -26,7 +26,7 @@ docker run --rm malice/avira EICAR
 #### Or link your own malware folder:
 
 ```bash
-$ docker run --rm -v /path/to/malware:/malware:ro malice/avira FILE
+$ docker run --rm -v `pwd`/hbedv.key:/opt/avira/hbedv.key -v /path/to/malware:/malware:ro malice/avira FILE
 
 Usage: avira [OPTIONS] COMMAND [arg...]
 

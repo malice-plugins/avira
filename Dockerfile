@@ -7,6 +7,8 @@ LABEL malice.plugin.category="av"
 LABEL malice.plugin.mime="*"
 LABEL malice.plugin.docker.engine="*"
 
+ARG AVIRA_KEY
+
 RUN buildDeps='ca-certificates file unzip curl' \
   && dpkg --add-architecture i386 \
   && apt-get update \
@@ -55,6 +57,11 @@ RUN buildDeps='ca-certificates \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /go /usr/local/go
 
 # COPY hbedv.key /opt/avira
+RUN if [ "x$AVIRA_KEY" != "x" ]; then \
+      echo "===> Adding Avira License Key..."; \
+      mkdir -p /opt/avira; \
+      echo -n "$AVIRA_KEY" | base64 -d > /opt/avira/hbedv.key ; \
+    fi
 
 # Add EICAR Test Virus File to malware folder
 ADD http://www.eicar.org/download/eicar.com.txt /malware/EICAR

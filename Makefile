@@ -2,17 +2,18 @@ REPO=malice-plugins/avira
 ORG=malice
 NAME=avira
 VERSION=$(shell cat VERSION)
+AVIRA_KEY?=$(shell cat hbedv.key | base64)
 
 all: build size test avtest gotest
 
 build:
-	docker build -t $(ORG)/$(NAME):$(VERSION) .
+	docker build --build-arg AVIRA_KEY=${AVIRA_KEY} -t $(ORG)/$(NAME):$(VERSION) .
 
 base:
 	docker build -f Dockerfile.base -t $(ORG)/$(NAME):base .
 
 dev:
-	docker build -f Dockerfile.dev -t $(ORG)/$(NAME):$(VERSION) .
+	docker build --build-arg AVIRA_KEY=${AVIRA_KEY} -f Dockerfile.dev -t $(ORG)/$(NAME):$(VERSION) .
 
 size:
 	sed -i.bu 's/docker%20image-.*-blue/docker%20image-$(shell docker images --format "{{.Size}}" $(ORG)/$(NAME):$(VERSION)| cut -d' ' -f1)-blue/' README.md
@@ -39,14 +40,18 @@ avtest:
 	@docker run --init --rm --entrypoint=sh $(ORG)/$(NAME):$(VERSION) -c "/opt/avira/scancl --version" > tests/av.version || true
 
 test:
-	docker rm -f elasticsearch || true
-	docker run --init -d --name elasticsearch -p 9200:9200 blacktop/elasticsearch
-	sleep 10; docker run --init --rm $(ORG)/$(NAME):$(VERSION)
-	docker run --init --rm --link elasticsearch -v `pwd`/hbedv.key:/opt/avira/hbedv.key $(ORG)/$(NAME):$(VERSION) -V EICAR | jq . > docs/results.json
-	cat docs/results.json | jq .
-	http localhost:9200/malice/_search | jq . > docs/elastic.json
-	cat docs/elastic.json | jq -r '.hits.hits[] ._source.plugins.av.${NAME}.markdown' > docs/SAMPLE.md
-	docker rm -f elasticsearch
+	@echo "===> Starting elasticsearch"
+	@docker rm -f elasticsearch || true
+	@docker run --init -d --name elasticsearch -p 9200:9200 blacktop/elasticsearch
+	@echo "===> ${NAME} --help"
+	@sleep 10; docker run --init --rm $(ORG)/$(NAME):$(VERSION)
+	@echo "===> ${NAME} EICAR test"
+	@docker run --init --rm --link elasticsearch $(ORG)/$(NAME):$(VERSION) -V EICAR | jq . > docs/results.json
+	@cat docs/results.json | jq .
+	@echo "===> ${NAME} pull MarkDown from elasticsearch results"			
+	@http localhost:9200/malice/_search | jq . > docs/elastic.json
+	@cat docs/elastic.json | jq -r '.hits.hits[] ._source.plugins.av.${NAME}.markdown' > docs/SAMPLE.md
+	@docker rm -f elasticsearch
 
 circle: ci-size
 	@sed -i.bu 's/docker%20image-.*-blue/docker%20image-$(shell cat .circleci/SIZE)-blue/' README.md

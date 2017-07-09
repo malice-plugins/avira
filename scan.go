@@ -83,7 +83,7 @@ func AvScan(timeout int) Avira {
 
 	if err != nil {
 		// Avira needs to have a vaild license key to work
-		if err.Error() != "exit status 219" {
+		if err.Error() == "exit status 219" {
 			return Avira{Results: ParseAviraOutput(results, errors.New("ERROR: [No license found] Initialization"))}
 		}
 		// Avira exits with error status 1 if it finds a virus

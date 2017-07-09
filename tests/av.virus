@@ -10,13 +10,13 @@ registered user:    Free
 serial number:      0000149996
 key expires:        Jan 02 2018
 
-Scan start time: Sun Jul  9 19:46:35 2017
+Scan start time: Sun Jul  9 20:35:20 2017
 Command line: /opt/avira/scancl /malware/EICAR 
 
 auto excluding /sys from scanning (is a special fs)
 auto excluding /proc from scanning (is a special fs)
 configuration file: /opt/avira/scancl.conf
-/malware/EICAR Date: 01.01.1970 Time: 00:00:00  Size: 68 ALERT: [Eicar-Test-Signature] /malware/EICAR <<< Contains signature of the Eicar-Test-Signature virus
+/malware/EICAR ALERT: [Eicar-Test-Signature] /malware/EICAR <<< Contains signature of the Eicar-Test-Signature virus
                                                                                 
 
 Statistics :                

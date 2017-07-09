@@ -10,7 +10,7 @@ registered user:    Free
 serial number:      0000149996
 key expires:        Jan 02 2018
 
-Scan start time: Sun Jul  9 18:47:12 2017
+Scan start time: Sun Jul  9 19:46:35 2017
 Command line: /opt/avira/scancl /malware/EICAR 
 
 auto excluding /sys from scanning (is a special fs)

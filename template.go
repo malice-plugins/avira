@@ -1,6 +1,6 @@
 package main
 
-const tpl = `#### Zoner
+const tpl = `#### Avira
 {{- with .Results }}
 | Infected      | Result      | Engine      | Updated      |
 |:-------------:|:-----------:|:-----------:|:------------:|
@@ -8,9 +8,9 @@ const tpl = `#### Zoner
 {{ end -}}
 `
 
-// func printMarkDownTable(bitdefender Zoner) {
+// func printMarkDownTable(bitdefender Avira) {
 //
-// 	fmt.Println("#### Zoner")
+// 	fmt.Println("#### Avira")
 // 	table := clitable.New([]string{"Infected", "Result", "Engine", "Updated"})
 // 	table.AddRow(map[string]interface{}{
 // 		"Infected": bitdefender.Results.Infected,

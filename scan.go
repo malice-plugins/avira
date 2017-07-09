@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -66,31 +67,22 @@ func assert(err error) {
 	}
 }
 
-func startZavService(ctx context.Context) error {
-	// Avira needs to have the daemon started first
-	_, err := utils.RunCommand(ctx, "/etc/init.d/zavd", "start", "--no-daemon")
-	return err
-}
-
 // AvScan performs antivirus scan
 func AvScan(timeout int) Avira {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
 	defer cancel()
 
-	// start service
-	assert(startZavService(ctx))
-
-	results, err := utils.RunCommand(ctx, "zavcli", path)
+	results, err := utils.RunCommand(ctx, "/opt/avira/scancl", path)
 	log.WithFields(log.Fields{
 		"plugin":   name,
 		"category": category,
 		"path":     path,
-	}).Debug("Avira output: ", results)
+	}).Debug("avira output: ", results)
 
 	if err != nil {
-		// Avira exits with error status 11 if it finds a virus
-		if err.Error() != "exit status 11" {
+		// Avira exits with error status 1 if it finds a virus
+		if err.Error() != "exit status 1" {
 			log.WithFields(log.Fields{
 				"plugin":   name,
 				"category": category,
@@ -118,50 +110,56 @@ func ParseAviraOutput(aviraout string, err error) ResultsData {
 	// Extract Virus string
 	for _, line := range lines {
 		if len(line) != 0 {
-			if strings.Contains(line, "INFECTED") {
-				result := extractVirusName(line)
-				if len(result) != 0 {
-					avira.Result = result
-					avira.Infected = true
-				} else {
-					return ResultsData{Error: fmt.Sprint("[ERROR] virus name extracted was empty: ", result)}
+			if strings.Contains(line, "ALERT:") {
+				result, err := extractVirusName(line)
+				if err != nil {
+					return ResultsData{Error: err.Error()}
+
 				}
+				avira.Result = result
+				avira.Infected = true
 			}
 		}
 	}
-	avira.Engine = getEngine()
+	avira.Engine = ParseAviraEngine(getEngine())
 	avira.Updated = getUpdatedDate()
 
 	return avira
 }
 
 // extractVirusName extracts Virus name from scan results string
-func extractVirusName(line string) string {
-	keyvalue := strings.Split(line, "INFECTED")
-	return strings.Trim(strings.TrimSpace(keyvalue[1]), "[]")
+func extractVirusName(line string) (string, error) {
+	var rgx = regexp.MustCompile(`\[.*?\]`)
+	rs := rgx.FindStringSubmatch(line)
+	if len(rs) > 0 {
+		return strings.Trim(strings.TrimSpace(rs[0]), "[]"), nil
+	}
+	return "", fmt.Errorf("was not able to extract virus name from: %s", line)
 }
 
 func getEngine() string {
-	var engine = ""
-
-	// start service
-	startZavService(context.Background())
-
-	results, err := utils.RunCommand(nil, "zavcli", "--version-zavd")
+	results, err := utils.RunCommand(nil, "/opt/avira/scancl", "--version")
 	log.WithFields(log.Fields{
 		"plugin":   name,
 		"category": category,
 		"path":     path,
-	}).Debug("Avira DB version: ", results)
+	}).Debug("avira version: ", results)
 	assert(err)
 
-	for _, line := range strings.Split(results, "\n") {
+	return results
+}
+
+// ParseAviraEngine convert avira version into engine string
+func ParseAviraEngine(aviraVersion string) string {
+	var engine = ""
+	for _, line := range strings.Split(aviraVersion, "\n") {
 		if len(line) != 0 {
-			if strings.Contains(line, "ZAVDB version:") {
-				engine = strings.TrimSpace(strings.TrimPrefix(line, "ZAVDB version:"))
+			if strings.Contains(line, "engine set:") {
+				engine = strings.TrimSpace(strings.TrimPrefix(line, "engine set:"))
 			}
 		}
 	}
+
 	return engine
 }
 
@@ -182,7 +180,7 @@ func updateAV(ctx context.Context) error {
 		"plugin":   name,
 		"category": category,
 		"path":     path,
-	}).Debug("Avira update: ", output)
+	}).Debug("avira update: ", output)
 	assert(err)
 
 	// Update UPDATED file
@@ -221,12 +219,12 @@ func webAvScan(w http.ResponseWriter, r *http.Request) {
 	file, header, err := r.FormFile("malware")
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintln(w, "Please supply a valid file to scan.")
+		fmt.Fprintln(w, "please supply a valid file to scan")
 		log.Error(err)
 	}
 	defer file.Close()
 
-	log.Debug("Uploaded fileName: ", header.Filename)
+	log.Debug("uploaded fileName: ", header.Filename)
 
 	tmpfile, err := ioutil.TempFile("/malware", "web_")
 	if err != nil {

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
+	"log"
 	"testing"
 )
 
@@ -11,7 +11,7 @@ func TestParseResult(t *testing.T) {
 
 	r, err := ioutil.ReadFile("tests/av.virus")
 	if err != nil {
-		fmt.Print(err)
+		log.Fatal(err)
 	}
 
 	results := ParseAviraOutput(string(r), nil)

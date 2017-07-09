@@ -4,7 +4,7 @@ malice-avira
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 [![Docker Stars](https://img.shields.io/docker/stars/malice/avira.svg)](https://store.docker.com/community/images/malice/avira)
 [![Docker Pulls](https://img.shields.io/docker/pulls/malice/avira.svg)](https://store.docker.com/community/images/malice/avira)
-[![Docker Image](https://img.shields.io/badge/docker%20image-162MB-blue.svg)](https://store.docker.com/community/images/malice/avira)
+[![Docker Image](https://img.shields.io/badge/docker%20image-541MB-blue.svg)](https://store.docker.com/community/images/malice/avira)
 
 Malice [Avira](https://www.avira.com) AntiVirus Plugin
 
@@ -86,6 +86,7 @@ This will output to stdout and POST to malice results API webhook endpoint.
 Documentation
 -------------
 
+-	[To use your own license key](https://github.com/malice-plugins/avira/blob/master/docs/license.md)
 -	[To write results to ElasticSearch](https://github.com/malice-plugins/avira/blob/master/docs/elasticsearch.md)
 -	[To create a Avira scan micro-service](https://github.com/malice-plugins/avira/blob/master/docs/web.md)
 -	[To post results to a webhook](https://github.com/malice-plugins/avira/blob/master/docs/callback.md)

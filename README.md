@@ -2,11 +2,11 @@ malice-avira
 ============
 [![Circle CI](https://circleci.com/gh/malice-plugins/avira.png?style=shield)](https://circleci.com/gh/malice-plugins/avira)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
-[![Docker Stars](https://img.shields.io/docker/stars/malice/avira.svg)](https://hub.docker.com/r/malice/avira/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/malice/avira.svg)](https://hub.docker.com/r/malice/avira/)
-[![Docker Image](https://img.shields.io/badge/docker%20image-162MB-blue.svg)](https://hub.docker.com/r/malice/avira/)
+[![Docker Stars](https://img.shields.io/docker/stars/malice/avira.svg)](https://store.docker.com/community/images/malice/avira)
+[![Docker Pulls](https://img.shields.io/docker/pulls/malice/avira.svg)](https://store.docker.com/community/images/malice/avira)
+[![Docker Image](https://img.shields.io/badge/docker%20image-162MB-blue.svg)](https://store.docker.com/community/images/malice/avira)
 
-Malice [Avira](http://www.aviraantivirus.com/stahnout) AntiVirus Plugin
+Malice [Avira](https://www.avira.com) AntiVirus Plugin
 
 ### Dependencies
 
@@ -15,7 +15,7 @@ Malice [Avira](http://www.aviraantivirus.com/stahnout) AntiVirus Plugin
 ### Installation
 
 1.	Install [Docker](https://www.docker.io/).
-2.	Download [trusted build](https://hub.docker.com/r/malice/avira/) from public [DockerHub](https://hub.docker.com): `docker pull malice/avira`
+2.	Download [trusted build](https://store.docker.com/community/images/malice/avira) from public [DockerHub](https://hub.docker.com): `docker pull malice/avira`
 
 ### Usage
 

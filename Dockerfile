@@ -7,8 +7,6 @@ LABEL malice.plugin.category="av"
 LABEL malice.plugin.mime="*"
 LABEL malice.plugin.docker.engine="*"
 
-ARG AVIRA_KEY
-
 RUN buildDeps='ca-certificates file unzip curl' \
   && dpkg --add-architecture i386 \
   && apt-get update \
@@ -55,6 +53,8 @@ RUN buildDeps='ca-certificates \
   && apt-get purge -y --auto-remove $buildDeps \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /go /usr/local/go
+
+ARG AVIRA_KEY
 
 # COPY hbedv.key /opt/avira
 RUN if [ "x$AVIRA_KEY" != "x" ]; then \

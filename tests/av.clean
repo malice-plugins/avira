@@ -10,13 +10,13 @@ registered user:    Free
 serial number:      0000149996
 key expires:        Jan 02 2018
 
-Scan start time: Sun Jul  9 20:35:35 2017
+Scan start time: Sun Jul  9 20:43:34 2017
 Command line: /opt/avira/scancl /bin/cat 
 
 auto excluding /sys from scanning (is a special fs)
 auto excluding /proc from scanning (is a special fs)
 configuration file: /opt/avira/scancl.conf
-/bin/cat                                                                                        
+/bin/cat Date: 18.02.2016 Time: 13:37:47  Size: 52080                                                                                
 
 Statistics :                
     Directories............... : 0

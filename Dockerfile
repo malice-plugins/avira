@@ -9,29 +9,21 @@ LABEL malice.plugin.docker.engine="*"
 
 RUN dpkg --add-architecture i386 \
   && apt-get update \
-  && apt-get install -y libc6-i386 file
+  && apt-get install -y libc6-i386 file unzip
 
 # Add Files
-COPY /run.sh /run.sh
-RUN chmod 755 /run.sh
+COPY scancl-linux_glibc22.tar.gz /tmp
+COPY avira_fusebundlegen-linux_glibc22-en.zip /tmp
+COPY avira.key /tmp/hbedv.key
 
-COPY /unattended.inf /unattended.inf
-RUN mkdir /home/quarantine/
+WORKDIR /tmp
 
-# Download Avira
-ADD http://premium.avira-update.com/package/wks_avira/unix/en/pers/antivir_workstation-pers.tar.gz /tmp
+RUN tar zxvf /tmp/scancl-linux_glibc22.tar.gz
+RUN unzip /tmp/avira_fusebundlegen-linux_glibc22-en.zip \
+  && ls -lah \
+  && /tmp/fusebundle.bin \
+  && mv install/fusebundle-linux_glibc22-int.zip /tmp/scancl-1.9.161.2/ \
+  && cd /tmp/scancl-1.9.161.2/ \
+  && unzip fusebundle-linux_glibc22-int.zip
 
-# Install Avira
-RUN /tmp/antivir-workstation-pers-3.1.3.5-0/install --inf=/unattended.inf
-
-ADD http://personal.avira-update.com/package/peclkey/win32/int/hbedv.key /usr/lib/AntiVir/guard/avira.key
-
-# Update Avira
-RUN /usr/lib/AntiVir/guard/avupdate-guard --product=Guard
-
-# Add EICAR Test Virus File to malware folder
-ADD http://www.eicar.org/download/eicar.com.txt /malware/EICAR
-
-WORKDIR /malware
-
-CMD ["/run.sh"]
+ADD http://personal.avira-update.com/package/peclkey/win32/int/hbedv.key /tmp/scancl-1.9.161.2/

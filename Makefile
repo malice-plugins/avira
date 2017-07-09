@@ -2,18 +2,17 @@ REPO=malice-plugins/avira
 ORG=malice
 NAME=avira
 VERSION=$(shell cat VERSION)
-AVIRA_KEY?=$(shell cat avira.key)
 
 all: build size test avtest gotest
 
 build:
-	docker build --build-arg AVIRA_KEY=${AVIRA_KEY} -t $(ORG)/$(NAME):$(VERSION) .
+	docker build -t $(ORG)/$(NAME):$(VERSION) .
 
 base:
 	docker build -f Dockerfile.base -t $(ORG)/$(NAME):base .
 
 dev:
-	docker build --build-arg AVIRA_KEY=${AVIRA_KEY} -f Dockerfile.dev -t $(ORG)/$(NAME):$(VERSION) .
+	docker build -f Dockerfile.dev -t $(ORG)/$(NAME):$(VERSION) .
 
 size:
 	sed -i.bu 's/docker%20image-.*-blue/docker%20image-$(shell docker images --format "{{.Size}}" $(ORG)/$(NAME):$(VERSION)| cut -d' ' -f1)-blue/' README.md
@@ -66,6 +65,5 @@ ci-size: ci-build
 clean:
 	docker-clean stop
 	docker rmi $(ORG)/$(NAME):$(VERSION)
-	docker rmi $(ORG)/$(NAME):base
 
 .PHONY: build dev size tags test gotest clean circle

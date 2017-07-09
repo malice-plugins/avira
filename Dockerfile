@@ -7,7 +7,9 @@ LABEL malice.plugin.category="av"
 LABEL malice.plugin.mime="*"
 LABEL malice.plugin.docker.engine="*"
 
-RUN apt-get -q update && apt-get install -yq libc6-i386
+RUN dpkg --add-architecture i386 \
+  && apt-get update \
+  && apt-get install -y libc6-i386 file
 
 # Add Files
 COPY /run.sh /run.sh
@@ -17,16 +19,18 @@ COPY /unattended.inf /unattended.inf
 RUN mkdir /home/quarantine/
 
 # Download Avira
-ADD http://premium.avira-update.com/package/wks_avira/unix/en/pers/antivir_workstation-pers.tar.gz /
-RUN tar -zxvf /antivir_workstation-pers.tar.gz
+ADD http://premium.avira-update.com/package/wks_avira/unix/en/pers/antivir_workstation-pers.tar.gz /tmp
 
 # Install Avira
-RUN /antivir-workstation-pers-3.1.3.5-0/install --inf=/unattended.inf
+RUN /tmp/antivir-workstation-pers-3.1.3.5-0/install --inf=/unattended.inf
 
 ADD http://personal.avira-update.com/package/peclkey/win32/int/hbedv.key /usr/lib/AntiVir/guard/avira.key
 
 # Update Avira
 RUN /usr/lib/AntiVir/guard/avupdate-guard --product=Guard
+
+# Add EICAR Test Virus File to malware folder
+ADD http://www.eicar.org/download/eicar.com.txt /malware/EICAR
 
 WORKDIR /malware
 

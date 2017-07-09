@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"html/template"
 	"io/ioutil"
@@ -81,6 +82,10 @@ func AvScan(timeout int) Avira {
 	}).Debug("avira output: ", results)
 
 	if err != nil {
+		// Avira needs to have a vaild license key to work
+		if err.Error() != "exit status 219" {
+			return Avira{Results: ParseAviraOutput(results, errors.New("ERROR: [No license found] Initialization"))}
+		}
 		// Avira exits with error status 1 if it finds a virus
 		if err.Error() != "exit status 1" {
 			log.WithFields(log.Fields{

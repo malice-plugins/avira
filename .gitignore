@@ -12,3 +12,5 @@
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
+scancl-1.9.161.2/
+avira_fusebundlegen-linux_glibc22-en/

@@ -1,2 +1,4 @@
-# avira
+avira
+=====
+
 Malice Avira AntiVirus Plugin

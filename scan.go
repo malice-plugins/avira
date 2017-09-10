@@ -179,18 +179,10 @@ func getUpdatedDate() string {
 
 func updateAV(ctx context.Context) error {
 	fmt.Println("Updating Avira...")
-	output, err := utils.RunCommand(ctx, "/opt/malice/update")
-	log.WithFields(log.Fields{
-		"plugin":   name,
-		"category": category,
-		"path":     path,
-	}).Debug("avira update: ", output)
-	if err.Error() != "exit status 100" {
-		assert(err)
-	}
+	fmt.Println(utils.RunCommand(ctx, "/opt/malice/update"))
 	// Update UPDATED file
 	t := time.Now().Format("20060102")
-	err = ioutil.WriteFile("/opt/malice/UPDATED", []byte(t), 0644)
+	err := ioutil.WriteFile("/opt/malice/UPDATED", []byte(t), 0644)
 	return err
 }
 

@@ -1,5 +1,4 @@
-# Create a Avira scan micro-service :new: :construction:
-
+# Create a Avira scan micro-service
 ```bash
 $ docker run -d -p 3993:3993 malice/avira web
 

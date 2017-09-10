@@ -39,6 +39,9 @@ avtest:
 	@echo "===> ${NAME} Version"
 	@docker run --init --rm --entrypoint=sh $(ORG)/$(NAME):$(VERSION) -c "/opt/avira/scancl --version" > tests/av.version || true
 
+update:
+	@docker run --init --rm $(ORG)/$(NAME):$(VERSION) -V update
+
 test:
 	@echo "===> Starting elasticsearch"
 	@docker rm -f elasticsearch || true

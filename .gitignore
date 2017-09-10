@@ -18,3 +18,4 @@ antivir-workstation-pers-3.1.3.5-0/
 antivir_workstation-pers.tar.gz
 *.key
 *.bu
+.circleci/build_num

@@ -4,7 +4,7 @@ malice-avira
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 [![Docker Stars](https://img.shields.io/docker/stars/malice/avira.svg)](https://store.docker.com/community/images/malice/avira)
 [![Docker Pulls](https://img.shields.io/docker/pulls/malice/avira.svg)](https://store.docker.com/community/images/malice/avira)
-[![Docker Image](https://img.shields.io/badge/docker%20image-541MB-blue.svg)](https://store.docker.com/community/images/malice/avira)
+[![Docker Image](https://img.shields.io/badge/docker%20image-561MB-blue.svg)](https://store.docker.com/community/images/malice/avira)
 
 Malice [Avira](https://www.avira.com) AntiVirus Plugin
 
@@ -34,7 +34,7 @@ Usage: avira [OPTIONS] COMMAND [arg...]
 
 Malice Avira AntiVirus Plugin
 
-Version: v0.1.0, BuildTime: 20170122
+Version: v0.1.0, BuildTime: 20170910
 
 Author:
   blacktop - <https://github.com/blacktop>

@@ -179,15 +179,15 @@ func getUpdatedDate() string {
 
 func updateAV(ctx context.Context) error {
 	fmt.Println("Updating Avira...")
-	// Avira needs to have the daemon started first
-	output, err := utils.RunCommand(nil, "/etc/init.d/zavd", "update")
+	output, err := utils.RunCommand(ctx, "/opt/malice/update")
 	log.WithFields(log.Fields{
 		"plugin":   name,
 		"category": category,
 		"path":     path,
 	}).Debug("avira update: ", output)
-	assert(err)
-
+	if err.Error() != "exit status 100" {
+		assert(err)
+	}
 	// Update UPDATED file
 	t := time.Now().Format("20060102")
 	err = ioutil.WriteFile("/opt/malice/UPDATED", []byte(t), 0644)
@@ -311,6 +311,9 @@ func main() {
 			Aliases: []string{"u"},
 			Usage:   "Update virus definitions",
 			Action: func(c *cli.Context) error {
+				if c.GlobalBool("verbose") {
+					log.SetLevel(log.DebugLevel)
+				}
 				return updateAV(nil)
 			},
 		},
@@ -318,6 +321,9 @@ func main() {
 			Name:  "web",
 			Usage: "Create a Avira scan web service",
 			Action: func(c *cli.Context) error {
+				if c.GlobalBool("verbose") {
+					log.SetLevel(log.DebugLevel)
+				}
 				webService()
 				return nil
 			},

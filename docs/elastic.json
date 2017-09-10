@@ -1,5 +1,5 @@
 {
-  "took": 86,
+  "took": 46,
   "timed_out": false,
   "_shards": {
     "total": 1,
@@ -13,21 +13,21 @@
       {
         "_index": "malice",
         "_type": "samples",
-        "_id": "AV0pF1bdFR4mv8hQqTh2",
+        "_id": "AV5tCmywkwCjOYmgkhYm",
         "_score": 1,
         "_source": {
           "plugins": {
             "av": {
               "avira": {
-                "engine": "8.3.44.100",
+                "engine": "8.3.48.18",
                 "infected": true,
-                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| true | Eicar-Test-Signature | 8.3.44.100 | 20170709 |\n",
+                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| true | Eicar-Test-Signature | 8.3.48.18 | 20170910 |\n",
                 "result": "Eicar-Test-Signature",
-                "updated": "20170709"
+                "updated": "20170910"
               }
             }
           },
-          "scan_date": "2017-07-09T20:43:01.705545094Z"
+          "scan_date": "2017-09-10T18:25:53.320493944Z"
         }
       }
     ]

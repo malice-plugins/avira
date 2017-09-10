@@ -2,15 +2,15 @@ Avira / Linux Version 1.9.161.2
 Copyright (c) 2010 by Avira GmbH
 All rights reserved.
 
-engine set:         8.3.44.100
-VDF Version:        7.14.16.152 
+engine set:         8.3.48.18
+VDF Version:        7.14.27.20 
 
 key file:           /opt/avira/hbedv.key
 registered user:    Free
 serial number:      0000149996
 key expires:        Jan 02 2018
 
-Scan start time: Sun Jul  9 20:43:19 2017
+Scan start time: Sun Sep 10 18:26:11 2017
 Command line: /opt/avira/scancl /malware/EICAR 
 
 auto excluding /sys from scanning (is a special fs)

@@ -62,10 +62,12 @@ RUN if [ "x$AVIRA_KEY" != "x" ]; then \
       mkdir -p /opt/avira; \
       echo -n "$AVIRA_KEY" | base64 -d > /opt/avira/hbedv.key ; \
     fi
-RUN mkdir -p /opt/malice
+
 
 # Add EICAR Test Virus File to malware folder
 ADD http://www.eicar.org/download/eicar.com.txt /malware/EICAR
+RUN mkdir -p /opt/malice
+COPY update.sh /opt/malice/update
 
 WORKDIR /malware
 

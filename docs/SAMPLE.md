@@ -1,5 +1,5 @@
 #### Avira
 | Infected      | Result      | Engine      | Updated      |
 |:-------------:|:-----------:|:-----------:|:------------:|
-| true | Eicar-Test-Signature | 8.3.48.18 | 20170910 |
+| true | WORM/Rbot.Gen | 8.3.52.34 | 20180729 |
 

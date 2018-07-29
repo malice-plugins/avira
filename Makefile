@@ -5,7 +5,7 @@ CATEGORY=av
 VERSION=$(shell cat VERSION)
 
 MALWARE=tests/malware
-AVIRA_KEY?=$(shell cat avira.key | base64)
+AVIRA_KEY?=$(shell cat hbedv.key | base64)
 
 
 all: build size tag test test_markdown

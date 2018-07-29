@@ -1,8 +1,8 @@
 {
   "avira": {
     "infected": true,
-    "result": "Eicar-Test-Signature",
-    "engine": "8.3.48.18",
-    "updated": "20170910"
+    "result": "WORM/Rbot.Gen",
+    "engine": "8.3.52.34",
+    "updated": "20180729"
   }
 }

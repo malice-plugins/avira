@@ -1,9 +1,10 @@
 {
-  "took": 46,
+  "took": 38,
   "timed_out": false,
   "_shards": {
     "total": 1,
     "successful": 1,
+    "skipped": 0,
     "failed": 0
   },
   "hits": {
@@ -13,21 +14,21 @@
       {
         "_index": "malice",
         "_type": "samples",
-        "_id": "AV5tCmywkwCjOYmgkhYm",
+        "_id": "khgW5GQBVwhRLPyHoX27",
         "_score": 1,
         "_source": {
           "plugins": {
             "av": {
               "avira": {
-                "engine": "8.3.48.18",
+                "engine": "8.3.52.34",
                 "infected": true,
-                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| true | Eicar-Test-Signature | 8.3.48.18 | 20170910 |\n",
-                "result": "Eicar-Test-Signature",
-                "updated": "20170910"
+                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| true | WORM/Rbot.Gen | 8.3.52.34 | 20180729 |\n",
+                "result": "WORM/Rbot.Gen",
+                "updated": "20180729"
               }
             }
           },
-          "scan_date": "2017-09-10T18:25:53.320493944Z"
+          "scan_date": "2018-07-29T03:30:45.811683859Z"
         }
       }
     ]

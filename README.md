@@ -98,6 +98,10 @@ This will output to stdout and POST to malice results API webhook endpoint.
 
 Find a bug? Want more features? Find something missing in the documentation? Let me know! Please don't hesitate to [file an issue](https://github.com/malice-plugins/avira/issues/new).
 
+## TODO
+
+- [ ] add docs on how to get a license key [:wink:](https://github.com/malice-plugins/avira/blob/master/NOTES.md)
+
 ## CHANGELOG
 
 See [`CHANGELOG.md`](https://github.com/malice-plugins/avira/blob/master/CHANGELOG.md)

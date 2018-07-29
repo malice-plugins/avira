@@ -4,15 +4,15 @@ NAME=avira
 CATEGORY=av
 VERSION=$(shell cat VERSION)
 
-MALWARE=test/malware
-AVIRA_KEY?=$(shell cat hbedv.key | base64)
+MALWARE=tests/malware
+AVIRA_KEY?=$(shell cat avira.key | base64)
 
 
 all: build size tag test test_markdown
 
 .PHONY: build
 build:
-	cd $(VERSION); docker build -t $(ORG)/$(NAME):$(VERSION) .
+	docker build --build-arg AVIRA_KEY=${AVIRA_KEY} -t $(ORG)/$(NAME):$(VERSION) .
 
 .PHONY: size
 size:
@@ -63,7 +63,7 @@ endif
 malware:
 ifeq (,$(wildcard test/malware))
 	wget https://github.com/maliceio/malice-av/raw/master/samples/befb88b89c2eb401900a68e9f5b78764203f2b48264fcc3f7121bf04a57fd408 -O $(MALWARE)
-	cd test; echo "TEST" > not.malware
+	cd tests; echo "TEST" > not.malware
 endif
 
 .PHONY: test
@@ -104,6 +104,7 @@ ci-size: ci-build
 clean:
 	docker-clean stop
 	docker image rm $(ORG)/$(NAME):$(VERSION)
+	docker image rm $(ORG)/$(NAME):latest
 	rm $(MALWARE)
 
 # Absolutely awesome: http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html

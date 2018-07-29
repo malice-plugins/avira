@@ -55,6 +55,7 @@ RUN buildDeps='ca-certificates \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /go /usr/local/go
 
 ARG AVIRA_KEY
+ENV AVIRA_KEY=$AVIRA_KEY
 
 # COPY hbedv.key /opt/avira
 RUN if [ "x$AVIRA_KEY" != "x" ]; then \
@@ -63,9 +64,9 @@ RUN if [ "x$AVIRA_KEY" != "x" ]; then \
   echo -n "$AVIRA_KEY" | base64 -d > /opt/avira/hbedv.key ; \
   fi
 
-
 # Add EICAR Test Virus File to malware folder
 ADD http://www.eicar.org/download/eicar.com.txt /malware/EICAR
+
 RUN mkdir -p /opt/malice
 COPY update.sh /opt/malice/update
 

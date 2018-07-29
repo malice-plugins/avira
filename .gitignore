@@ -19,3 +19,5 @@ antivir_workstation-pers.tar.gz
 *.key
 *.bu
 .circleci/build_num
+test/malware
+test/not.malware

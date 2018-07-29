@@ -13,7 +13,7 @@ RUN buildDeps='ca-certificates file unzip curl' \
   && apt-get install -yq $buildDeps libc6-i386 \
   && echo "===> Install Avira..." \
   && curl -sSL "http://professional.avira-update.com/package/scancl/linux_glibc22/en/scancl-linux_glibc22.tar.gz" \
-		| tar -xzf - -C /tmp \
+  | tar -xzf - -C /tmp \
   && mv /tmp/scancl* /opt/avira \
   && curl -sSL -o /tmp/fusebundlegen.zip "http://install.avira-update.com/package/fusebundlegen/linux_glibc22/en/avira_fusebundlegen-linux_glibc22-en.zip" \
   && cd /tmp && unzip /tmp/fusebundlegen.zip \
@@ -25,16 +25,16 @@ RUN buildDeps='ca-certificates file unzip curl' \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/*
 
-ENV GO_VERSION 1.8.3
+ENV GO_VERSION 1.10.3
 
 COPY . /go/src/github.com/malice-plugins/avira
 RUN buildDeps='ca-certificates \
-               build-essential \
-               gdebi-core \
-               libssl-dev \
-               mercurial \
-               git-core \
-               wget' \
+  build-essential \
+  gdebi-core \
+  libssl-dev \
+  mercurial \
+  git-core \
+  wget' \
   && apt-get update -qq \
   && apt-get install -yq $buildDeps libc6-i386 \
   && set -x \
@@ -48,7 +48,7 @@ RUN buildDeps='ca-certificates \
   && export GOPATH=/go \
   && go version \
   && go get \
-  && go build -ldflags "-X main.Version=$(cat VERSION) -X main.BuildTime=$(date -u +%Y%m%d)" -o /bin/avscan \
+  && go build -ldflags "-s -w -X main.Version=$(cat VERSION) -X main.BuildTime=$(date -u +%Y%m%d)" -o /bin/avscan \
   && echo "===> Clean up unnecessary files..." \
   && apt-get purge -y --auto-remove $buildDeps \
   && apt-get clean \
@@ -58,10 +58,10 @@ ARG AVIRA_KEY
 
 # COPY hbedv.key /opt/avira
 RUN if [ "x$AVIRA_KEY" != "x" ]; then \
-      echo "===> Adding Avira License Key..."; \
-      mkdir -p /opt/avira; \
-      echo -n "$AVIRA_KEY" | base64 -d > /opt/avira/hbedv.key ; \
-    fi
+  echo "===> Adding Avira License Key..."; \
+  mkdir -p /opt/avira; \
+  echo -n "$AVIRA_KEY" | base64 -d > /opt/avira/hbedv.key ; \
+  fi
 
 
 # Add EICAR Test Virus File to malware folder

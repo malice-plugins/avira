@@ -1,4 +1,17 @@
-FROM ubuntu:xenial
+####################################################
+# GOLANG BUILDER
+####################################################
+FROM golang:1.11 as go_builder
+
+COPY . /go/src/github.com/malice-plugins/avira
+WORKDIR /go/src/github.com/malice-plugins/avira
+RUN go get -u github.com/golang/dep/cmd/dep && dep ensure
+RUN go build -ldflags "-s -w -X main.Version=v$(cat VERSION) -X main.BuildTime=$(date -u +%Y%m%d)" -o /bin/avscan
+
+####################################################
+# PLUGIN BUILDER
+####################################################
+FROM ubuntu:bionic
 
 LABEL maintainer "https://github.com/blacktop"
 
@@ -6,6 +19,13 @@ LABEL malice.plugin.repository = "https://github.com/malice-plugins/avira.git"
 LABEL malice.plugin.category="av"
 LABEL malice.plugin.mime="*"
 LABEL malice.plugin.docker.engine="*"
+
+# Create a malice user and group first so the IDs get set the same way, even as
+# the rest of this may change over time.
+RUN groupadd -r malice \
+  && useradd --no-log-init -r -g malice malice \
+  && mkdir /malware \
+  && chown -R malice:malice /malware
 
 RUN buildDeps='ca-certificates file unzip curl' \
   && dpkg --add-architecture i386 \
@@ -25,35 +45,6 @@ RUN buildDeps='ca-certificates file unzip curl' \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/*
 
-ENV GO_VERSION 1.10.3
-
-COPY . /go/src/github.com/malice-plugins/avira
-RUN buildDeps='ca-certificates \
-  build-essential \
-  gdebi-core \
-  libssl-dev \
-  mercurial \
-  git-core \
-  wget' \
-  && apt-get update -qq \
-  && apt-get install -yq $buildDeps libc6-i386 \
-  && set -x \
-  && echo "===> Install Go..." \
-  && ARCH="$(dpkg --print-architecture)" \
-  && wget -q https://storage.googleapis.com/golang/go$GO_VERSION.linux-$ARCH.tar.gz -O /tmp/go.tar.gz \
-  && tar -C /usr/local -xzf /tmp/go.tar.gz \
-  && export PATH=$PATH:/usr/local/go/bin \
-  && echo "===> Building avscan Go binary..." \
-  && cd /go/src/github.com/malice-plugins/avira \
-  && export GOPATH=/go \
-  && go version \
-  && go get \
-  && go build -ldflags "-s -w -X main.Version=$(cat VERSION) -X main.BuildTime=$(date -u +%Y%m%d)" -o /bin/avscan \
-  && echo "===> Clean up unnecessary files..." \
-  && apt-get purge -y --auto-remove $buildDeps \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /go /usr/local/go
-
 ARG AVIRA_KEY
 ENV AVIRA_KEY=$AVIRA_KEY
 
@@ -64,11 +55,13 @@ RUN if [ "x$AVIRA_KEY" != "x" ]; then \
   echo -n "$AVIRA_KEY" | base64 -d > /opt/avira/hbedv.key ; \
   fi
 
+RUN mkdir -p /opt/malice
+COPY update.sh /opt/malice/update
+
 # Add EICAR Test Virus File to malware folder
 ADD http://www.eicar.org/download/eicar.com.txt /malware/EICAR
 
-RUN mkdir -p /opt/malice
-COPY update.sh /opt/malice/update
+COPY --from=go_builder /bin/avscan /bin/avscan
 
 WORKDIR /malware
 

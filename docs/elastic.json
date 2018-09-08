@@ -1,5 +1,5 @@
 {
-  "took": 38,
+  "took": 59,
   "timed_out": false,
   "_shards": {
     "total": 1,
@@ -8,27 +8,47 @@
     "failed": 0
   },
   "hits": {
-    "total": 1,
+    "total": 2,
     "max_score": 1,
     "hits": [
       {
         "_index": "malice",
         "_type": "samples",
-        "_id": "khgW5GQBVwhRLPyHoX27",
+        "_id": "CmT5uWUBxno0XGXrT0O6",
         "_score": 1,
         "_source": {
           "plugins": {
             "av": {
               "avira": {
-                "engine": "8.3.52.34",
+                "engine": "8.3.52.64",
                 "infected": true,
-                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| true | WORM/Rbot.Gen | 8.3.52.34 | 20180729 |\n",
+                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| true | WORM/Rbot.Gen | 8.3.52.64 | 20180908 |\n",
                 "result": "WORM/Rbot.Gen",
-                "updated": "20180729"
+                "updated": "20180908"
               }
             }
           },
-          "scan_date": "2018-07-29T03:30:45.811683859Z"
+          "scan_date": "2018-09-08T16:17:28.495204969Z"
+        }
+      },
+      {
+        "_index": "malice",
+        "_type": "samples",
+        "_id": "C2T5uWUBxno0XGXrc0OP",
+        "_score": 1,
+        "_source": {
+          "plugins": {
+            "av": {
+              "avira": {
+                "engine": "8.3.52.64",
+                "infected": false,
+                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| false |  | 8.3.52.64 | 20180908 |\n",
+                "result": "",
+                "updated": "20180908"
+              }
+            }
+          },
+          "scan_date": "2018-09-08T16:17:37.678502526Z"
         }
       }
     ]

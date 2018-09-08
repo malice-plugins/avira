@@ -7,12 +7,15 @@ docs*
 vendor*
 test*
 
-README.md
-README.md.bu
+antivir-workstation-pers-3.1.3.5-0*
+avira_fusebundlegen-linux_glibc22-en*
+scancl-1.9.161.2*
+
+*.md
+*.md.bu
+*.old
 LICENSE
-CHANGELOG.md
 Makefile
-NOTES.md
 # *.key
 avira_fusebundlegen-linux_glibc22-en.zip
 scancl-linux_glibc22.tar.gz

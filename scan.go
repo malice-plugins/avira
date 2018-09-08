@@ -18,12 +18,17 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/fatih/structs"
 	"github.com/gorilla/mux"
-	"github.com/malice-plugins/go-plugin-utils/database"
-	"github.com/malice-plugins/go-plugin-utils/database/elasticsearch"
-	"github.com/malice-plugins/go-plugin-utils/utils"
+	"github.com/malice-plugins/pkgs/database"
+	"github.com/malice-plugins/pkgs/database/elasticsearch"
+	"github.com/malice-plugins/pkgs/utils"
 	"github.com/parnurzeal/gorequest"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli"
+)
+
+const (
+	name     = "avira"
+	category = "av"
 )
 
 var (
@@ -33,11 +38,9 @@ var (
 	BuildTime string
 
 	path string
-)
-
-const (
-	name     = "avira"
-	category = "av"
+	hash string
+	// es is the elasticsearch database object
+	es elasticsearch.Database
 )
 
 type pluginResults struct {
@@ -175,7 +178,7 @@ func getUpdatedDate() string {
 		return BuildTime
 	}
 	updated, err := ioutil.ReadFile("/opt/malice/UPDATED")
-	utils.Assert(err)
+	assert(err)
 	return string(updated)
 }
 
@@ -255,8 +258,6 @@ func webAvScan(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-	es := elasticsearch.Database{Index: "malice", Type: "samples"}
-
 	cli.AppHelpTemplate = utils.AppHelpTemplate
 	app := cli.NewApp()
 
@@ -286,11 +287,11 @@ func main() {
 			EnvVar: "MALICE_PROXY",
 		},
 		cli.StringFlag{
-			Name:        "elasitcsearch",
+			Name:        "elasticsearch",
 			Value:       "",
-			Usage:       "elasitcsearch address for Malice to store results",
-			EnvVar:      "MALICE_ELASTICSEARCH",
-			Destination: &es.Host,
+			Usage:       "elasticsearch url for Malice to store results",
+			EnvVar:      "MALICE_ELASTICSEARCH_URL",
+			Destination: &es.URL,
 		},
 		cli.IntFlag{
 			Name:   "timeout",
@@ -333,20 +334,20 @@ func main() {
 
 		if c.Args().Present() {
 			path, err = filepath.Abs(c.Args().First())
-			utils.Assert(err)
+			assert(err)
 
 			if _, err := os.Stat(path); os.IsNotExist(err) {
-				utils.Assert(err)
+				assert(err)
 			}
 
 			avira := AvScan(c.Int("timeout"))
 			avira.Results.MarkDown = generateMarkDownTable(avira)
 
 			// upsert into Database
-			if len(c.String("elasitcsearch")) > 0 {
+			if len(c.String("elasticsearch")) > 0 {
 				err := es.Init()
 				if err != nil {
-					return errors.Wrap(err, "failed to initalize elasitcsearch")
+					return errors.Wrap(err, "failed to initalize elasticsearch")
 				}
 				err = es.StorePluginResults(database.PluginResults{
 					ID:       utils.Getopt("MALICE_SCANID", utils.GetSHA256(path)),
@@ -364,7 +365,7 @@ func main() {
 			} else {
 				avira.Results.MarkDown = ""
 				aviraJSON, err := json.Marshal(avira)
-				utils.Assert(err)
+				assert(err)
 				if c.Bool("post") {
 					request := gorequest.New()
 					if c.Bool("proxy") {
@@ -380,11 +381,11 @@ func main() {
 				fmt.Println(string(aviraJSON))
 			}
 		} else {
-			log.Fatal(fmt.Errorf("please supply a file to scan with malice/avira"))
+			log.Fatal(fmt.Errorf("Please supply a file to scan with malice/%s", name))
 		}
 		return nil
 	}
 
 	err := app.Run(os.Args)
-	utils.Assert(err)
+	assert(err)
 }

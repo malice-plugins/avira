@@ -1,7 +1,7 @@
 # To update the AV run the following:
 
 ```bash
-$ docker run --name=avira malice/avira update
+$ docker run --name avira malice/avira update
 ```
 
 ## Then to use the updated avira container:

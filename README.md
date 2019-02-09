@@ -4,7 +4,7 @@
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 [![Docker Stars](https://img.shields.io/docker/stars/malice/avira.svg)](https://store.docker.com/community/images/malice/avira)
 [![Docker Pulls](https://img.shields.io/docker/pulls/malice/avira.svg)](https://store.docker.com/community/images/malice/avira)
-[![Docker Image](https://img.shields.io/badge/docker%20image-264MB-blue.svg)](https://store.docker.com/community/images/malice/avira)
+[![Docker Image](https://img.shields.io/badge/docker%20image-302MB-blue.svg)](https://store.docker.com/community/images/malice/avira)
 
 Malice [Avira](https://www.avira.com) AntiVirus Plugin
 

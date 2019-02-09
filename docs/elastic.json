@@ -1,5 +1,5 @@
 {
-  "took": 59,
+  "took": 129,
   "timed_out": false,
   "_shards": {
     "total": 1,
@@ -14,41 +14,41 @@
       {
         "_index": "malice",
         "_type": "samples",
-        "_id": "CmT5uWUBxno0XGXrT0O6",
+        "_id": "_yGk1GgBEZwSlUEGMDzg",
         "_score": 1,
         "_source": {
           "plugins": {
             "av": {
               "avira": {
-                "engine": "8.3.52.64",
+                "engine": "8.3.52.180",
                 "infected": true,
-                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| true | WORM/Rbot.Gen | 8.3.52.64 | 20180908 |\n",
+                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| true | WORM/Rbot.Gen | 8.3.52.180 | 20190209 |\n",
                 "result": "WORM/Rbot.Gen",
-                "updated": "20180908"
+                "updated": "20190209"
               }
             }
           },
-          "scan_date": "2018-09-08T16:17:28.495204969Z"
+          "scan_date": "2019-02-09T23:42:36.7440114Z"
         }
       },
       {
         "_index": "malice",
         "_type": "samples",
-        "_id": "C2T5uWUBxno0XGXrc0OP",
+        "_id": "ACGk1GgBEZwSlUEGWz2j",
         "_score": 1,
         "_source": {
           "plugins": {
             "av": {
               "avira": {
-                "engine": "8.3.52.64",
+                "engine": "8.3.52.180",
                 "infected": false,
-                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| false |  | 8.3.52.64 | 20180908 |\n",
+                "markdown": "#### Avira\n| Infected      | Result      | Engine      | Updated      |\n|:-------------:|:-----------:|:-----------:|:------------:|\n| false |  | 8.3.52.180 | 20190209 |\n",
                 "result": "",
-                "updated": "20180908"
+                "updated": "20190209"
               }
             }
           },
-          "scan_date": "2018-09-08T16:17:37.678502526Z"
+          "scan_date": "2019-02-09T23:42:47.7126659Z"
         }
       }
     ]

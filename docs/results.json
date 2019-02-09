@@ -2,7 +2,7 @@
   "avira": {
     "infected": true,
     "result": "WORM/Rbot.Gen",
-    "engine": "8.3.52.64",
-    "updated": "20180908"
+    "engine": "8.3.52.180",
+    "updated": "20190209"
   }
 }

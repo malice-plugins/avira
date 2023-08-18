@@ -7,7 +7,7 @@ import (
 
 	"fmt"
 	"html/template"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -177,7 +177,7 @@ func getUpdatedDate() string {
 	if _, err := os.Stat("/opt/malice/UPDATED"); os.IsNotExist(err) {
 		return BuildTime
 	}
-	updated, err := ioutil.ReadFile("/opt/malice/UPDATED")
+	updated, err := os.ReadFile("/opt/malice/UPDATED")
 	assert(err)
 	return string(updated)
 }
@@ -187,7 +187,7 @@ func updateAV(ctx context.Context) error {
 	fmt.Println(utils.RunCommand(ctx, "/opt/malice/update"))
 	// Update UPDATED file
 	t := time.Now().Format("20060102")
-	err := ioutil.WriteFile("/opt/malice/UPDATED", []byte(t), 0644)
+	err := os.WriteFile("/opt/malice/UPDATED", []byte(t), 0644)
 	return err
 }
 
@@ -228,13 +228,13 @@ func webAvScan(w http.ResponseWriter, r *http.Request) {
 
 	log.Debug("uploaded fileName: ", header.Filename)
 
-	tmpfile, err := ioutil.TempFile("/malware", "web_")
+	tmpfile, err := os.CreateTemp("/malware", "web_")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer os.Remove(tmpfile.Name()) // clean up
 
-	data, err := ioutil.ReadAll(file)
+	data, err := io.ReadAll(file)
 	assert(err)
 
 	if _, err = tmpfile.Write(data); err != nil {

@@ -1,15 +1,15 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
+	"os"
 	"testing"
 )
 
 // TestParseResult tests the ParseFSecureOutput function.
 func TestParseResult(t *testing.T) {
 
-	r, err := ioutil.ReadFile("tests/av.virus")
+	r, err := os.ReadFile("tests/av.virus")
 	if err != nil {
 		log.Fatal(err)
 	}
